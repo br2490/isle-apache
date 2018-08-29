@@ -121,7 +121,6 @@ RUN add-apt-repository -y ppa:ondrej/apache2 && \
     php5.6-zip \
     php5.6-bcmath \
     php5.6-intl \
-    php5.6-imagick \
     php-uploadprogress \
     php-xdebug \
     bibutils \
@@ -219,6 +218,8 @@ RUN BUILD_DEPS="build-essential \
     ./configure --with-imagick=/usr/local/bin && \
     make && \
     make install && \
+    echo '; configuration for php imagick module \nextension=imagick.so' > /etc/php/5.6/mods-available/imagick.ini && \
+    phpenmod imagick && \
     ## Cleanup phase.
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
